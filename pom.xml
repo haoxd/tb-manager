@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <!-- 引入tb-parent坐标 -->
   <parent>
     <groupId>com.tb.parent</groupId>
     <artifactId>tb-parent</artifactId>
@@ -9,4 +10,67 @@
   <artifactId>tb-manager</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <!-- 模块 -->
+  <modules>
+  	<module>tb-manager-pojo</module>
+  	<module>tb-manager-dao</module>
+  	<module>tb-manager-service</module>
+  	<module>tb.manager.controller</module>
+  </modules>
+ 
+  <dependencies>
+  	<!--引入common依赖    -->
+   <dependency>
+			<groupId>com.tb.common</groupId>
+			<artifactId>tb-common</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+	</dependency> 
+   <!--引入junit测试  -->
+  	<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+	</dependency> 
+	<!--  apache工具包-->
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-lang3</artifactId>
+	</dependency>
+		
+	 <dependency>  
+         <groupId>commons-io</groupId>  
+         <artifactId>commons-io</artifactId>  
+     </dependency> 	
+     
+	<dependency>
+    	<groupId>commons-fileupload</groupId>
+    	<artifactId>commons-fileupload</artifactId>
+    	<version>1.3.1</version>
+	</dependency>
+     
+     <dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>
+	</dependency>
+  			
+  </dependencies>
+  
+  
+		
+  <!--聚合之后导入tomcat插件  -->
+  <build>
+  	<plugins>
+				<!-- 配置Tomcat插件 -->
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<!--tomcat配置  -->
+					<configuration>
+						<prot>8081</prot>
+						<path>/</path>
+					</configuration>
+				</plugin>
+	</plugins> 
+  </build>
+  
 </project>
