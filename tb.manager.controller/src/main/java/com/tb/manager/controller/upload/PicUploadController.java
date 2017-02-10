@@ -32,7 +32,7 @@ import com.tb.manager.service.env.EnvConfigService;
 @RequestMapping("/pic")
 public class PicUploadController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(PicUploadController.class);
+	private static final Logger log = LoggerFactory.getLogger(PicUploadController.class);
 
 	// jackson当中的一个类
 	private static final ObjectMapper mapper = new ObjectMapper();
@@ -78,8 +78,8 @@ public class PicUploadController {
 		// 文件新路径
 		String filePath = getFilePath(uploadFile.getOriginalFilename());
 
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Pic file upload .[{}] to [{}] .", uploadFile.getOriginalFilename(), filePath);
+		if (log.isDebugEnabled()) {
+			log.debug("Pic file upload .[{}] to [{}] .", uploadFile.getOriginalFilename(), filePath);
 		}
 
 		// 生成图片的绝对引用地址
@@ -102,6 +102,7 @@ public class PicUploadController {
 				isLegal = true;
 			}
 		} catch (IOException e) {
+			log.error("校验图片内容发生错误："+e);
 		}
 
 		// 状态
@@ -138,7 +139,9 @@ public class PicUploadController {
 		// 生成新的文件名
 		String fileName = new DateTime(nowDate).toString("yyyyMMddhhmmssSSSS") + RandomUtils.nextInt(100, 9999) + "."
 				+ StringUtils.substringAfterLast(sourceFileName, ".");
-		return fileFolder + File.separator + fileName;
+		String newFilePath = fileFolder + File.separator + fileName;
+		log.info("上传图片生成新的图片路径："+newFilePath);
+		return newFilePath;
 	}
 
 }

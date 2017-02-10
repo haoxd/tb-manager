@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,8 @@ import com.tb.manager.service.item.ItemCatService;
 @Controller
 @RequestMapping(value="/item/cat")
 public class ItemCatController {
+
+	private static final Logger  log = LoggerFactory.getLogger(ItemCatController.class); 
 	
 	@Resource(name="itemCatService")
 	private ItemCatService catService;
@@ -38,6 +42,9 @@ public class ItemCatController {
 			@RequestParam(value="id",defaultValue="0") Long pid){
 		
 		try {
+			if(log.isDebugEnabled()){
+				log.debug("查询商品类目列表入参：pid="+pid);				
+			}
 			ic = new ItemCat();
 			ic.setParentId(pid);
 			List<ItemCat> list = this.catService.queryListByWhere(ic);
@@ -46,7 +53,7 @@ public class ItemCatController {
 			}
 			return ResponseEntity.ok(list);
 		} catch (Exception e) {
-			// TODO: handle exception
+			log.error("查询商品类目列表错误："+e);
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	}

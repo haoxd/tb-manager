@@ -19,7 +19,7 @@ import com.tb.manager.util.DateUtils;
 * 文件名称：baseService.java  
 * 类说明：基于泛型化开发的通用service
  */
-public abstract class baseService<T extends BasePojo> {
+public abstract class BaseService<T extends BasePojo> {
 	
 	//采用依赖泛型注入方式实现，在子类当中，继承的通用mapper，
 	//会更具你需要的类型在spring容器当中寻找到你的实现dao接口进行注入到子类当中

@@ -40,18 +40,24 @@ public class ItemController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> addItem(Item item,@RequestParam("desc") String desc){
 		try {
-			log.debug("新增商品入参数：item={}"+item +"desc ={}" +desc);
-			
+			if(log.isDebugEnabled()){
+				log.debug("新增商品入参：item={}"+item +"desc ={}" +desc);	
+			}
+					
 			if(StringUtils.isEmpty(item.getTitle())){
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();//400
 			}
 			
 			Boolean resulet=this.itemService.addItem(item,desc);
-			if(!resulet){	
+			if(!resulet){
+				if(log.isDebugEnabled()){
 				log.debug("新增商品失败：item={}"+item +"desc ={}" +desc);
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();	//500
+				}
 			}
+			if(log.isDebugEnabled()){
 			log.debug("新增商品成功，商品id为：" +item.getId());
+			}
 		} catch (Exception e) {
 			log.error("新增商品信息出错:"+e);
 		}

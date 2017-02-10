@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.tb.manager.pojo.Item;
 import com.tb.manager.pojo.ItemDesc;
-import com.tb.manager.service.base.baseService;
+import com.tb.manager.service.base.BaseService;
 @Service("itemService")
-public class ItemService extends baseService<Item> {
+public class ItemService extends BaseService<Item> {
 	
 	
 	@Resource(name="itemDescService")
