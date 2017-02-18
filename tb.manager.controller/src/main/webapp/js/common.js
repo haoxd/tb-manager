@@ -40,7 +40,7 @@ var TT = TB = {
 	},
 	// 格式化价格
 	formatPrice : function(val,row){
-		return (val/1000).toFixed(2);
+		return (val/100).toFixed(2);
 	},
 	// 格式化商品的状态
 	formatItemStatus : function formatStatus(val,row){
@@ -57,6 +57,29 @@ var TT = TB = {
     	this.initPicUpload(data);
     	this.initItemCat(data);
     },
+    
+    picShow : function(thisObj){
+    	  $(thisObj).children("input").show();  
+    },
+    
+    picHide : function(thisObj){
+    	  $(thisObj).children("input").hide(); 
+    },
+    picDel : function(obj){
+        $(obj).parent().parent().remove();  
+        var delsrc=   $(obj).prev().attr("src");//获取当前图片url
+        var imgsStr = $("[name=image]").val();//获取隐藏域全部图片url
+        var imgs =imgsStr.split(",");//转换为数组
+        //进行匹配
+        for(var i=0; i<imgs.length; i++) {
+            if(imgs[i] == delsrc) {
+            	imgs.splice(i, 1);
+              break;
+            }
+          }
+        $("[name=image]").val(imgs.join(","));
+        
+    },
     // 初始化图片上传组件
     initPicUpload : function(data){
     	$(".picFileUpload").each(function(i,e){
@@ -69,11 +92,24 @@ var TT = TB = {
     		// 回显图片
         	if(data && data.pics){
         		var imgs = data.pics.split(",");
+  
         		for(var i in imgs){
         			if($.trim(imgs[i]).length > 0){
-        				_ele.siblings(".pics").find("ul").append("<li><a href='"+imgs[i]+"' target='_blank'><img src='"+imgs[i]+"' width='80' height='50' /></a></li>");
+        				var li  ="";
+        				li +="<li>";
+        				li +=" <div  onmouseover=\"TB.picShow(this)\" onmouseout=\"TB.picHide(this)\"'style=\"float:left\">";
+        				li +="<img src=\""+imgs[i]+"\" width=\"80\" height=\"50\" />";
+        				
+        				li +="<input type=\"button\" value=\"删除\" style=\"display:none\" onclick=\"TB.picDel(this)\"/>  ";
+        		
+        				li +="</div>";        				
+        				li +="</li>"
+        				_ele.siblings(".pics").find("ul").append(li);
+        				
         			}
         		}
+        	   
+        		
         	}
         	$(e).unbind('click').click(function(){
         		var form = $(this).parentsUntil("form").parent("form");//逐级查找到form元素
@@ -82,10 +118,15 @@ var TT = TB = {
         			var editor = this;
         			editor.plugin.multiImageDialog({
 						clickFn : function(urlList) { //点击全部插入时调用
-							var imgArray = [];
+							/*
+							 * 获取隐藏域全部图片url 在进行组装是为了，当用户进行新上传图片后
+							 * 吧原来渲染的图片隐藏域的数据情况，在业务逻辑上是不对的，
+							 * */
+							var imgsStr = $("[name=image]").val();//获取隐藏域全部图片url
+							var imgArray =imgsStr.split(",");//转换为数组
 							KindEditor.each(urlList, function(i, data) {
 								imgArray.push(data.url);
-								form.find(".pics ul").append("<li><a href='"+data.url+"' target='_blank'><img src='"+data.url+"' width='80' height='50' /></a></li>");
+								form.find(".pics ul").append("<li><img src='"+data.url+"' width='80' height='50' /></li>");
 							});
 							form.find("[name=image]").val(imgArray.join(","));//放入图片隐藏域当中
 							editor.hideDialog();
@@ -100,8 +141,8 @@ var TT = TB = {
     initItemCat : function(data){
     	$(".selectItemCat").each(function(i,e){
     		var _ele = $(e);//获取当前选择的dom对象转换为jquery对象
-    		if(data && data.cid){
-    			_ele.after("<span style='margin-left:10px;'>"+data.cid+"</span>");
+    		if(data && data.cid && data.cname){
+    			_ele.after("<span style='margin-left:10px;'>"+data.cname+"</span>");
     		}else{
     			_ele.after("<span style='margin-left:10px;'></span>");
     		}

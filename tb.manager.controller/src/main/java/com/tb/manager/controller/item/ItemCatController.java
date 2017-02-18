@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tb.manager.pojo.ItemCat;
 import com.tb.manager.service.item.ItemCatService;
+import com.tb.manager.service.item.ItemService;
 
 /**
 
@@ -29,8 +30,18 @@ public class ItemCatController {
 
 	private static final Logger  log = LoggerFactory.getLogger(ItemCatController.class); 
 	
+	/**
+	 * 商品类目服务
+	 * */
+	
 	@Resource(name="itemCatService")
 	private ItemCatService catService;
+	
+	/**
+	 * 商品服务
+	 * */
+	@Resource(name="itemService")
+	private ItemService itemService;
 	private ItemCat ic ;
 	
 	/**
@@ -56,6 +67,27 @@ public class ItemCatController {
 			log.error("查询商品类目列表错误："+e);
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	}
+	
+	/**
+	 * 更具商品类目id获取商品类目名称
+	 * @param cid:商品类目id
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value="/queryItemNameByCid",method=RequestMethod.GET)
+	public ResponseEntity<ItemCat> queryItemNameByCid(@RequestParam("id") Long id){
+		log.debug("更具商品类目id获取商品类目名称入参 id："+id);
+		try {
+			
+			Long itemCatId = this.itemService.queryCidById(id);
+			
+			ItemCat icate= this.catService.queryItemNameByCid(itemCatId);
+			return ResponseEntity.ok(icate);
+		} catch (Exception e) {
+			log.error("更具商品类目id获取商品类目名称："+e);
+		}
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);//500
 	}
 	
 	
