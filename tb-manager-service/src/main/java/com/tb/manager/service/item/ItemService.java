@@ -86,7 +86,7 @@ public class ItemService extends BaseService<Item> {
 	 * @return
 	 */
 	public Boolean updateItem(Item item, String desc) {
-		item.setStatus(null);//强制设置时间不可修改
+		item.setStatus(null);//强制设置状态不可修改
 		Integer resultItem = super.updateSelective(item);
 		
 		iDesc = new  ItemDesc();

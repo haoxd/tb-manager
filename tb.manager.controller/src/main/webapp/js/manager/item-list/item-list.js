@@ -105,23 +105,34 @@ var toolbar = [ {
 	text : '删除',
 	iconCls : 'icon-cancel',
 	handler : function() {
-		var ids = getSelectionsIds();
-		if (ids.length == 0) {
+		var id = getSelectionsIds();
+		if (id.length == 0) {
 			$.messager.alert('提示', '未选中商品!');
 			return;
-		}
-		$.messager.confirm('确认', '确定删除ID为 ' + ids + ' 的商品吗？', function(r) {
-			if (r) {
-				var params = {
-					"ids" : ids
-				};
-				$.post("/ow/item/delete", params, function(data) {
-					if (data.status == 200) {
-						$.messager.alert('提示', '删除商品成功!', undefined, function() {
-							$("#itemList").datagrid("reload");
-						});
-					}
-				});
+		}		
+			$.messager.confirm('确认', '确定删除ID为 ' + id + ' 的商品吗？', function(isOK) {
+			var isCan = isOK;
+			if (isCan) {				
+				$.ajax({
+					   type: "POST",
+					   url: "/ow/item/delItemById",
+					   data:{"Id":id} ,		   
+					   statusCode: {
+						   200: function() {
+							   $.messager.alert('提示', '删除商品成功!', undefined, function() {
+									$("#itemList").datagrid("reload");
+								});
+						  },
+						  404 : function(){
+							  $.messager.alert('提示','该商品已经不存在');   
+						  },
+						   500: function(){
+							  $.messager.alert('提示','删除商品失败!'); 
+						  }			   
+					}		  		 
+					});
+				
+			
 			}
 		});
 	}
@@ -129,48 +140,67 @@ var toolbar = [ {
 	text : '下架',
 	iconCls : 'icon-remove',
 	handler : function() {
-		var ids = getSelectionsIds();
-		if (ids.length == 0) {
+		var id = getSelectionsIds();
+		if (id.length == 0) {
 			$.messager.alert('提示', '未选中商品!');
 			return;
 		}
-		$.messager.confirm('确认', '确定下架ID为 ' + ids + ' 的商品吗？', function(r) {
-			if (r) {
-				var params = {
-					"ids" : ids
-				};
-				$.post("/ow/item/instock", params, function(data) {
-					if (data.status == 200) {
-						$.messager.alert('提示', '下架商品成功!', undefined, function() {
-							$("#itemList").datagrid("reload");
-						});
-					}
-				});
+		$.messager.confirm('确认', '确定下架ID为 ' + id + ' 的商品吗？', function(isOK) {
+			var isCan = isOK;
+			if (isCan) {				
+				$.ajax({
+					   type: "POST",
+					   url: "/ow/item/lowerItemById",
+					   data:{"Id":id} ,		   
+					   statusCode: {
+						   200: function() {
+							   $.messager.alert('提示', '下架商品成功!', undefined, function() {
+									$("#itemList").datagrid("reload");
+								});
+						  },
+						   500: function(){
+							  $.messager.alert('提示','下架商品失败!'); 
+						  }			   
+					}		  		 
+					});
+				
+			
 			}
+		
+			
 		});
 	}
 }, {
 	text : '上架',
 	iconCls : 'icon-remove',
 	handler : function() {
-		var ids = getSelectionsIds();
-		if (ids.length == 0) {
+		var id = getSelectionsIds();
+		if (id.length == 0) {
 			$.messager.alert('提示', '未选中商品!');
 			return;
 		}
-		$.messager.confirm('确认', '确定上架ID为 ' + ids + ' 的商品吗？', function(r) {
-			if (r) {
-				var params = {
-					"ids" : ids
-				};
-				$.post("/ow/item/reshelf", params, function(data) {
-					if (data.status == 200) {
-						$.messager.alert('提示', '上架商品成功!', undefined, function() {
-							$("#itemList").datagrid("reload");
-						});
-					}
-				});
+		$.messager.confirm('确认', '确定上架ID为 ' + id + ' 的商品吗？', function(isOK) {
+			var isCan = isOK;
+			if (isCan) {				
+				$.ajax({
+					   type: "POST",
+					   url: "/ow/item/upperItemById",
+					   data:{"Id":id} ,		   
+					   statusCode: {
+						   200: function() {
+							   $.messager.alert('提示', '上架商品成功!', undefined, function() {
+									$("#itemList").datagrid("reload");
+								});
+						  },						  
+						   500: function(){
+							  $.messager.alert('提示','上架商品失败!'); 
+						  }			   
+					}		  		 
+					});
+				
+			
 			}
+		
 		});
 	}
 } ];

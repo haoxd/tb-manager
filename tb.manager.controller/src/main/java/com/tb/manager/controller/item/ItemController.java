@@ -1,5 +1,9 @@
 package com.tb.manager.controller.item;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
@@ -19,7 +23,20 @@ import com.tb.manager.pojo.Item;
 import com.tb.manager.pojo.ItemDesc;
 import com.tb.manager.service.item.ItemDescService;
 import com.tb.manager.service.item.ItemService;
+import com.tb.manager.system.Constant;
+import com.tb.manager.util.DateUtils;
 
+/**
+ * @author acer11
+ *  作者：haoxd
+* 创建时间：2017年2月21日 下午7:25:47  
+* 项目名称：tb.manager.controller  
+* @author daniel  
+* @version 1.0   
+* @since JDK 1.6.0_21  
+* 文件名称：ItemController.java  
+* 类说明：商品controller
+ */
 @Controller
 @RequestMapping(value="/item")
 public class ItemController {
@@ -128,6 +145,86 @@ public class ItemController {
 		}
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();//204
 	
+	}
+	
+	/**
+	 * 更具商品id物理删除商品
+	 * @param Id:商品id
+	 * @return
+	 */
+	@RequestMapping(value="/delItemById" ,method=RequestMethod.POST)
+	public ResponseEntity<Void> delItemById(@RequestParam("Id") String Ids){
+		
+		log.debug("更具商品id物理删除商品入参 id："+Ids);
+		try {
+			String [] stringArr= Ids.split(",");  //转为数组
+			List<Object> listIds = new LinkedList<Object>();
+			for (int i = 0; i < stringArr.length; i++) {
+				listIds.add(stringArr[i]);
+			}
+			Integer result =this.itemService.delByIds(listIds, Item.class, "id");
+			if(result.intValue()>0){
+				return  ResponseEntity.ok(null);//200
+			}else{
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();//404
+			}
+		} catch (Exception e) {
+			log.error("更具商品id删除商品错误"+e);
+		}
+		return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();//500
+	}
+	
+	/**
+	 * 上架商品
+	 * @param Id：商品id
+	 * @return
+	 */
+	@RequestMapping(value="/upperItemById",method=RequestMethod.POST)
+	public ResponseEntity<Void> upperItemById(@RequestParam("Id")Long Id){
+		
+		try {
+			log.debug("上架商品入参 id："+Id);	
+			
+			Item inParam = new Item();
+			
+			inParam.setId(Id);
+			inParam.setStatus(Constant.ItemStatus.UPPER_STATUS);
+			
+			
+			Integer resulet=this.itemService.updateSelective(inParam);
+			if(resulet.intValue()>0){
+				return  ResponseEntity.ok(null);//200
+			}		
+		} catch (Exception e) {
+			log.error("上架商品信息出错:"+e);			
+		}
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();//500
+	}
+	
+	/**
+	 * 下架商品
+	 * @param Id：商品id
+	 * @return
+	 */
+	@RequestMapping(value="/lowerItemById",method=RequestMethod.POST)
+	public ResponseEntity<Void> lowerItemById(@RequestParam("Id")Long Id){
+		
+		try {
+			log.debug("下架商品入参 id："+Id);	
+			
+			Item inParam = new Item();
+			
+			inParam.setId(Id);
+			inParam.setStatus(Constant.ItemStatus.LOWER_STATUS);
+			
+			Integer resulet=this.itemService.updateSelective(inParam);
+			if(resulet.intValue()>0){
+				return  ResponseEntity.ok(null);//200
+			}		
+		} catch (Exception e) {
+			log.error("下架商品信息出错:"+e);			
+		}
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();//500
 	}
 	
 	
