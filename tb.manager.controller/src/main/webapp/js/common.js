@@ -99,9 +99,8 @@ var TT = TB = {
         				li +="<li>";
         				li +=" <div  onmouseover=\"TB.picShow(this)\" onmouseout=\"TB.picHide(this)\"'style=\"float:left\">";
         				li +="<img src=\""+imgs[i]+"\" width=\"80\" height=\"50\" />";
-        				
-        				li +="<input type=\"button\" value=\"删除\" style=\"display:none\" onclick=\"TB.picDel(this)\"/>  ";
-        		
+        				li+="<br>";
+        				li +="<input type=\"button\" value=\"删除\" style=\"display:none\" onclick=\"TB.picDel(this)\"/>  ";		
         				li +="</div>";        				
         				li +="</li>"
         				_ele.siblings(".pics").find("ul").append(li);
