@@ -57,10 +57,12 @@
 	        </tr>
 	    </table>
 	    <input type="hidden" name="itemParams"/>
-	</form>
-	<div style="padding:5px">
-	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">提交</a>
-	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">重置</a>
+	    <div style="padding:5px">
+	    
+	    <input type="button" onclick="submitForm()" value="提交" />
+	     <input type="reset" value="重置" />
 	</div>
+	</form>
+	
 </div>
 <script type="text/javascript" src="/js/manager/item-add/item-add.js"></script>

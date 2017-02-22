@@ -33,5 +33,40 @@ public class Constant {
 		 */
 		Integer LOWER_STATUS=2;
 	}
+	
+	/**
+	 * 商品属性
+	 * */
+	public interface ItemAttribute{
+		
+		/**
+		 * 商品主键ID
+		 */
+		String ITEM_ID="id";
+		
+	}
+	
+	/**
+	 * 商品描述属性
+	 * */
+	public interface ItemDescAttribute{
+		
+		/**
+		 * 商品描述主键id
+		 */
+		String ITEM_DESC_ID="itemId";
+	}
+	
+	/**
+	 * 商品规格属性
+	 * */
+	
+	public interface ItemParamItemAttribute{
+		
+		/**
+		 * 商品规格主键id
+		 */
+		String ITEM_PARAM_ITEM_ID="itemId";
+	}
 
 }

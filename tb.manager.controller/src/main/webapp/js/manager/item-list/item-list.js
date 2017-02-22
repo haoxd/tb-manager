@@ -144,6 +144,9 @@ var toolbar = [ {
 		if (id.length == 0) {
 			$.messager.alert('提示', '未选中商品!');
 			return;
+		}else if(isNaN(id)){
+			$.messager.alert('提示', '下架商品只可选中一个商品！');
+			return;
 		}
 		$.messager.confirm('确认', '确定下架ID为 ' + id + ' 的商品吗？', function(isOK) {
 			var isCan = isOK;
@@ -177,6 +180,9 @@ var toolbar = [ {
 		var id = getSelectionsIds();
 		if (id.length == 0) {
 			$.messager.alert('提示', '未选中商品!');
+			return;
+		}else if(isNaN(id)){
+			$.messager.alert('提示', '上架商品只可以选中一个商品！');
 			return;
 		}
 		$.messager.confirm('确认', '确定上架ID为 ' + id + ' 的商品吗？', function(isOK) {

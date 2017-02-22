@@ -42,13 +42,13 @@
 		
 		$("#itemAddForm [name=itemParams]").val(paramJson);
 		
-		/*
-		$.post("/rest/item/save",$("#itemAddForm").serialize(), function(data){
-			if(data.status == 200){
-				$.messager.alert('提示','新增商品成功!');
-			}
-		});
-		*/
+		var itemParams = $("#itemAddForm [name=itemParams]").val();
+		
+		if(itemParams=="" || itemParams == null){
+			$.messager.alert('提示','请详细填写商品规格参数');
+			return ;
+		}
+	
 		
 		//提交到后台的RESTful,基于响应码判断
 		$.ajax({
@@ -58,7 +58,7 @@
 		   statusCode: {
 			   201: function() {
 				   $.messager.alert('提示','新增商品成功!');
-				   clearForm();
+				  window.location.reload();
 			  },
 			  400 : function(){
 				  $.messager.alert('提示','提交参数不合法!');   

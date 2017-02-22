@@ -44,8 +44,16 @@ public class ItemController {
 	
 	private static final Logger log =  LoggerFactory.getLogger(ItemController.class);
 	
+	
+	
+	/**
+	 * 商品服务
+	 */
 	@Resource(name="itemService")
 	private ItemService itemService;
+	
+	
+	
 	
 
 	
@@ -57,20 +65,24 @@ public class ItemController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> addItem(Item item,@RequestParam("desc") String desc){
+	public ResponseEntity<Void> addItem(
+			Item item,
+			@RequestParam("desc") String desc,
+			@RequestParam("itemParams") String itemParams
+			){
 		try {
 			if(log.isDebugEnabled()){
-				log.debug("新增商品入参：item={}"+item +"desc ={}" +desc);	
+				log.debug("新增商品入参：item={}"+item +"desc ={}" +desc+"itemParams={}"+itemParams);	
 			}
 					
 			if(StringUtils.isEmpty(item.getTitle())){
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();//400
 			}
 			
-			Boolean resulet=this.itemService.addItem(item,desc);
+			Boolean resulet=this.itemService.addItem(item,desc,itemParams);
 			if(!resulet){
 				if(log.isDebugEnabled()){
-				log.debug("新增商品失败：item={}"+item +"desc ={}" +desc);
+				log.debug("新增商品失败：item={}"+item +"desc ={}" +desc+"itemParams={}"+itemParams);
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();	//500
 				}
 			}
@@ -162,8 +174,10 @@ public class ItemController {
 			for (int i = 0; i < stringArr.length; i++) {
 				listIds.add(stringArr[i]);
 			}
-			Integer result =this.itemService.delByIds(listIds, Item.class, "id");
-			if(result.intValue()>0){
+			//删除商品主体信息
+			boolean result =this.itemService.delItemInfos(listIds);
+								
+			if(result){
 				return  ResponseEntity.ok(null);//200
 			}else{
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();//404
