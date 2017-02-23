@@ -130,21 +130,24 @@ public class ItemController {
 	 * @return
 	 */
 	@RequestMapping(method=RequestMethod.PUT)
-	public ResponseEntity<Void>  updateItem(Item item,@RequestParam("desc") String desc){
+	public ResponseEntity<Void>  updateItem(
+			Item item,
+			@RequestParam("desc") String desc,
+			@RequestParam("itemParams") String itemParams){
 
 		try {
 			if(log.isDebugEnabled()){
-				log.debug("更新商品入参：item={}"+item +"desc ={}" +desc);	
+				log.debug("更新商品入参：item={}"+item +"desc ={}" +desc+"itemParams={}"+itemParams);	
 			}
 					
 			if(StringUtils.isEmpty(item.getTitle())){
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();//400
 			}
 			
-			Boolean resulet=this.itemService.updateItem(item,desc);
+			Boolean resulet=this.itemService.updateItem(item,desc,itemParams);
 			if(!resulet){
 				if(log.isDebugEnabled()){
-				log.debug("更新商品失败：item={}"+item +"desc ={}" +desc);
+				log.debug("更新商品失败：item={}"+item +"desc ={}" +desc+"itemParams="+itemParams);
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();	//500
 				}
 			}

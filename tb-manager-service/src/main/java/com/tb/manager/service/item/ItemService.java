@@ -109,11 +109,12 @@ public class ItemService extends BaseService<Item> {
 	}
 
 	/**更新商品信息描述
+	 * @param itemParams :商品规格信息
 	 * @param item：商品主体信息
 	 * @param desc:商品描述
 	 * @return
 	 */
-	public Boolean updateItem(Item item, String desc) {
+	public Boolean updateItem(Item item, String desc, String itemParams) {
 		item.setStatus(null);//强制设置状态不可修改
 		Integer resultItem = super.updateSelective(item);
 		
@@ -122,7 +123,12 @@ public class ItemService extends BaseService<Item> {
 		iDesc.setItemDesc(desc);
 			
 		Integer resultDesc =this.itemDescService.updateSelective(iDesc);
-		return resultItem.intValue() == 1 && resultDesc.intValue() == 1;
+		
+		
+		Integer resultItemParam = this.ipiService.updateItemParamItem(item.getId(),itemParams);
+		
+		
+		return resultItem.intValue() == 1 && resultDesc.intValue() == 1 && resultItemParam.intValue()== 1;
 	}
 
 	/**

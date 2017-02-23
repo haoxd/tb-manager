@@ -42,14 +42,19 @@
 		
 		$("#itemAddForm [name=itemParams]").val(paramJson);
 		
-		var itemParams = $("#itemAddForm [name=itemParams]").val();
-		
-		if(itemParams=="" || itemParams == null){
-			$.messager.alert('提示','请详细填写商品规格参数');
-			return ;
+
+		//遍历相同class的input框的值
+		var itemparamsVal = "";
+		$(".itemParams").each(function(){
+			itemparamsVal += $(this).val() + "";
+		});
+
+		var itemParamsMath= $(".itemParams").length;//获取相同class属性的input框个数
+
+		if(itemparamsVal.length<itemParamsMath){
+			$.messager.alert('提示','商品规格参数不可为空');
+			return;
 		}
-	
-		
 		//提交到后台的RESTful,基于响应码判断
 		$.ajax({
 		   type: "POST",
@@ -57,8 +62,8 @@
 		   data: $("#itemAddForm").serialize(),		   
 		   statusCode: {
 			   201: function() {
-				   $.messager.alert('提示','新增商品成功!');
-				  window.location.reload();
+				   $.messager.alert('提示','新增商品成功!');			  
+					   window.onload("/ow/page/item-add");      					   				  
 			  },
 			  400 : function(){
 				  $.messager.alert('提示','提交参数不合法!');   

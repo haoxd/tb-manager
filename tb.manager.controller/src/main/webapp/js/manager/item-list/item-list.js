@@ -59,15 +59,14 @@ var toolbar = [ {
 				
 
 				//加载商品规格
-				$.getJSON('/ow/item/param/item/query/' + data.id, function(_data) {
-					if (_data && _data.status == 200 && _data.data && _data.data.paramData) {
-						$("#itemeEditForm .params").show();
-						$("#itemeEditForm [name=itemParams]").val(_data.data.paramData);
-						$("#itemeEditForm [name=itemParamId]").val(_data.data.id);
-
+				$.getJSON('/ow/item/param/item/' + data.id, function(_data) {
+					
+						$("#itemParamsShow").show();
+						$("#itemeEditForm [name=itemParams]").val(_data.paramData);
+						$("#itemeEditForm [name=itemParamId]").val(_data.id);
+						console.log(_data);
 						//回显商品规格
-						var paramData = JSON.parse(_data.data.paramData);
-
+						var paramData = JSON.parse(_data.paramData);
 						var html = "<ul>";
 						for ( var i in paramData) {
 							var pd = paramData[i];
@@ -83,7 +82,7 @@ var toolbar = [ {
 						}
 						html += "</ul>";
 						$("#itemeEditForm .params td").eq(1).html(html);
-					}
+					
 				});
 				//用于异步渲染页面数据
 				function initViewInfo(data) {

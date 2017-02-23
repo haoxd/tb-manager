@@ -50,7 +50,7 @@
 	                <textarea style="width:800px;height:300px;visibility:hidden;" name="desc"></textarea>
 	            </td>
 	        </tr>
-	        <tr class="params hide">
+	        <tr class="params hide" id="itemParamsShow" style="display: none">
 	        	<td>商品规格:</td>
 	        	<td>
 	        		

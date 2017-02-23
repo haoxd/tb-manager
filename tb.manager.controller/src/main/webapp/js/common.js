@@ -243,7 +243,7 @@ var TT = TB = {
 							 
 							 for(var j in pd.params){
 								 var ps = pd.params[j];
-								 html+="<tr><td class=\"param\"><span>"+ps+"</span>: </td><td><input autocomplete=\"off\" type=\"text\"/></td></tr>";
+								 html+="<tr><td class=\"param\"><span>"+ps+"</span>: </td><td><input class=\"itemParams\" autocomplete=\"off\" type=\"text\"/></td></tr>";
 							 }
 							 
 							 html+="</li></table>";
