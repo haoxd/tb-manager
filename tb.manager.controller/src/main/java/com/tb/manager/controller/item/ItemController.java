@@ -23,7 +23,7 @@ import com.tb.manager.pojo.Item;
 import com.tb.manager.pojo.ItemDesc;
 import com.tb.manager.service.item.ItemDescService;
 import com.tb.manager.service.item.ItemService;
-import com.tb.manager.system.Constant;
+import com.tb.manager.system.constant.ItemConstant;
 import com.tb.manager.util.DateUtils;
 
 /**
@@ -205,7 +205,7 @@ public class ItemController {
 			Item inParam = new Item();
 			
 			inParam.setId(Id);
-			inParam.setStatus(Constant.ItemStatus.UPPER_STATUS);
+			inParam.setStatus(ItemConstant.ItemStatus.UPPER_STATUS);
 			
 			
 			Integer resulet=this.itemService.updateSelective(inParam);
@@ -232,7 +232,7 @@ public class ItemController {
 			Item inParam = new Item();
 			
 			inParam.setId(Id);
-			inParam.setStatus(Constant.ItemStatus.LOWER_STATUS);
+			inParam.setStatus(ItemConstant.ItemStatus.LOWER_STATUS);
 			
 			Integer resulet=this.itemService.updateSelective(inParam);
 			if(resulet.intValue()>0){

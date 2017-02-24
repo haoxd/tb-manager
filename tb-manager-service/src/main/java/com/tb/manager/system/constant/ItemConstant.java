@@ -1,4 +1,4 @@
-package com.tb.manager.system;
+package com.tb.manager.system.constant;
 
 /**
  * @author acer11
@@ -11,7 +11,7 @@ package com.tb.manager.system;
 * 文件名称：Constant.java  
 * 类说明：系统静态类常量类
  */
-public class Constant {
+public class ItemConstant {
 	
 	/**
 	 * 商品状态

@@ -16,7 +16,7 @@ import com.tb.manager.pojo.Item;
 import com.tb.manager.pojo.ItemDesc;
 import com.tb.manager.pojo.ItemParamItem;
 import com.tb.manager.service.base.BaseService;
-import com.tb.manager.system.Constant;
+import com.tb.manager.system.constant.ItemConstant;
 @Service("itemService")
 public class ItemService extends BaseService<Item> {
 	
@@ -139,11 +139,11 @@ public class ItemService extends BaseService<Item> {
 	public boolean delItemInfos(List<Object> listIds) {
 		
 		//删除商品信息
-		Integer itemResult =super.delByIds(listIds, Item.class, Constant.ItemAttribute.ITEM_ID);
+		Integer itemResult =super.delByIds(listIds, Item.class, ItemConstant.ItemAttribute.ITEM_ID);
 		//删除商品描述信息
-		Integer itemDescResult = this.itemDescService.delByIds(listIds, ItemDesc.class, Constant.ItemDescAttribute.ITEM_DESC_ID);
+		Integer itemDescResult = this.itemDescService.delByIds(listIds, ItemDesc.class, ItemConstant.ItemDescAttribute.ITEM_DESC_ID);
 		//删除商品规格信息
-		Integer itemParamItemResult = this.ipiService.delByIds(listIds, ItemParamItem.class, Constant.ItemParamItemAttribute.ITEM_PARAM_ITEM_ID);
+		Integer itemParamItemResult = this.ipiService.delByIds(listIds, ItemParamItem.class, ItemConstant.ItemParamItemAttribute.ITEM_PARAM_ITEM_ID);
 	
 		int count = itemResult.intValue()+itemDescResult.intValue()+itemParamItemResult.intValue();
 		
