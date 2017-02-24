@@ -3,9 +3,7 @@ package com.tb.manager.controller.item;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,15 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.tb.common.bean.EasyUIResult;
-import com.tb.manager.controller.upload.PicUploadController;
 import com.tb.manager.pojo.Item;
-import com.tb.manager.pojo.ItemDesc;
-import com.tb.manager.service.item.ItemDescService;
 import com.tb.manager.service.item.ItemService;
 import com.tb.manager.system.constant.ItemConstant;
-import com.tb.manager.util.DateUtils;
 
 /**
  * @author acer11
