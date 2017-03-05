@@ -47,13 +47,10 @@ public class ApiItemCatController {
 	private ItemCatService  itemCatService;
 	
 	/**
-	 * 对外提供接口：查询商品类目树数据
-	 * 通过jsonp解决跨域问题（
-	 * 	通过回掉方式解决拼接js代码解决
-	 * 		）
+	 * 测试jsop的实现：原理型代码		）
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping( value="test",method=RequestMethod.GET)
 	public ResponseEntity<String> queryItemCatData(
 			@RequestParam(value="callback",required=false)String callback ){
 		
@@ -77,6 +74,33 @@ public class ApiItemCatController {
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);//500
 	}
-	 
+	
+	
+	/**
+	 *  对外提供接口：查询商品类目树数据
+	 * 通过jsonp解决跨域问题（
+	 * 	通过回掉方式解决拼接js代码解决
+	 * 		）
+	 * 在spring-mvc配置文件中自定义httpmassageconverterjson类实现
+	 * @param callback
+	 * @return
+	 */
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<ItemCatResult> queryItemCatDataToTree(
+			@RequestParam(value="callback",required=false)String callback ){
+		
+		try {
+			ItemCatResult  itemCatResult=this.itemCatService.queryAllToItemCat();
+			
+			if(null!=itemCatResult){
+				return ResponseEntity.ok(itemCatResult);				
+			}
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);//404
+			
+		} catch (Exception e) {
+			log.error("查询商品类目树错误"+e);
+		}
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);//500
+	}
 
 }
