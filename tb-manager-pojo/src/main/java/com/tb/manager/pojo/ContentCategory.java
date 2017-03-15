@@ -26,7 +26,13 @@ public class ContentCategory extends BasePojo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "parent_id")
+    @Override
+	public String toString() {
+		return "ContentCategory [id=" + id + ", parentId=" + parentId + ", name=" + name + ", status=" + status
+				+ ", sortOrder=" + sortOrder + ", isParent=" + isParent + "]";
+	}
+
+	@Column(name = "parent_id")
     private Long parentId;
 
     private String name;

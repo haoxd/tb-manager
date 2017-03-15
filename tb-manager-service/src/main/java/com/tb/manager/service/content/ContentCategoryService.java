@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.tb.manager.pojo.ContentCategory;
 import com.tb.manager.service.base.BaseService;
+import com.tb.manager.system.constant.ContentConstant;
 
 /**
  * @author acer11
@@ -18,5 +19,27 @@ import com.tb.manager.service.base.BaseService;
  */
 @Service("contentCategoryService")
 public class ContentCategoryService extends BaseService<ContentCategory>{
+
+	/**
+	 * 增加内容类目实体
+	 * @param contentCategory
+	 */
+	public boolean addContentCategory(ContentCategory contentCategory) {
+		contentCategory.setId(null);
+		contentCategory.setIsParent(false);
+		contentCategory.setSortOrder(1);
+		contentCategory.setStatus(ContentConstant.ContentCategoryStatus.YES_STATUS);
+		Integer addResult =super.add(contentCategory);
+		
+		//判断该节点的父节点是否为true，不是修改为true
+		ContentCategory parentContentCategory=super.queryById(contentCategory.getParentId());
+		if(!parentContentCategory.getIsParent()){
+			parentContentCategory.setIsParent(true);
+			super.update(parentContentCategory);
+		}
+
+		return addResult.intValue()>0 ? true:false;
+		
+	}
 
 }
