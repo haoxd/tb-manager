@@ -1,5 +1,9 @@
 package com.tb.manager.service.content;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.tb.manager.pojo.ContentCategory;
@@ -40,6 +44,51 @@ public class ContentCategoryService extends BaseService<ContentCategory>{
 
 		return addResult.intValue()>0 ? true:false;
 		
+	}
+
+	/**删除内容类目
+	 * @param contentCategory
+	 * @return
+	 */
+	public boolean delContentCategory(ContentCategory contentCategory) {
+		List<Object> ids = new LinkedList<Object>();
+		ids.add(contentCategory.getId());
+		
+		//递归查找该id节点下的所有子节点id
+		this.findChildNode(ids, contentCategory.getId());
+		
+		Integer delResult =super.delByIds(ids, ContentCategory.class, ContentConstant.ContentCategoryAttribute.CONTENT_CATEGORY_ID);
+		
+		//判断该节点是否还有兄弟节点 ，如果没有则修改父节点的isParen的属性
+		ContentCategory  inParam = new ContentCategory();
+		inParam.setParentId(contentCategory.getParentId());
+		List<ContentCategory> list = super.queryListByWhere(inParam);
+		if(list.isEmpty()|| null==list){
+			ContentCategory  contentCategoryParam = new ContentCategory();
+			contentCategoryParam.setId(contentCategory.getParentId());
+			contentCategoryParam.setIsParent(false);
+			super.updateSelective(contentCategoryParam);
+			
+		}
+		return delResult.intValue()>0 ? true:false;
+	}
+	
+	
+	/**
+	 * 查找子节点
+	 */
+	private void findChildNode(List<Object> ids,Long pid){
+		ContentCategory  inParam = new ContentCategory();
+		inParam.setParentId(pid);
+		List<ContentCategory> contentCategoryList = super.queryListByWhere(inParam);
+		for (ContentCategory contentCategory : contentCategoryList) {
+			ids.add(contentCategory.getId());
+			//判断该节点是否为父节点，是：继续 否：停止
+			if(contentCategory.getIsParent()){
+				//继续递归
+				findChildNode(ids,contentCategory.getId());
+			}
+		}
 	}
 
 }

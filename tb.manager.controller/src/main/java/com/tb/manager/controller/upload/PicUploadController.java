@@ -55,7 +55,7 @@ public class PicUploadController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
+	@RequestMapping(value = "/upload",  produces = MediaType.TEXT_PLAIN_VALUE)
 	@ResponseBody
 	public String upload(@RequestParam("uploadFile") MultipartFile uploadFile, HttpServletResponse response)
 			throws Exception {

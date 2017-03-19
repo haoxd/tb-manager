@@ -3,7 +3,7 @@
 <script type="text/javascript" charset="utf-8" src="/js/kindeditor-4.1.10/kindeditor-all-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/kindeditor-4.1.10/lang/zh_CN.js"></script>
 <div style="padding:10px 10px 10px 10px">
-	<form id="contentAddForm" class="itemForm" method="post">
+	<form id="contentAddForm" class="itemForm" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="categoryId"/>
 	    <table cellpadding="5">
 	        <tr>
@@ -50,48 +50,5 @@
 	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="contentAddPage.clearForm()">重置</a>
 	</div>
 </div>
-<script type="text/javascript">
-	var contentAddEditor ;
-	$(function(){
-		contentAddEditor = TT.createEditor("#contentAddForm [name=content]");
-		TT.initOnePicUpload();
-		$("#contentAddForm [name=categoryId]").val($("#contentCategoryTree").tree("getSelected").id);
-	});
-	
-	var contentAddPage  = {
-			submitForm : function (){
-				if(!$('#contentAddForm').form('validate')){
-					$.messager.alert('提示','表单还未填写完成!');
-					return ;
-				}
-				contentAddEditor.sync();
-				
-				/* $.post("/rest/content/save",$("#contentAddForm").serialize(), function(data){
-					if(data.status == 200){
-						$.messager.alert('提示','新增内容成功!');
-    					$("#contentList").datagrid("reload");
-    					TT.closeCurrentWindow();
-					}
-				}); */
-				
-				//提交到后台的RESTful
-				$.ajax({
-				   type: "POST",
-				   url: "/rest/content",
-				   data: $("#contentAddForm").serialize(),
-				   success: function(msg){
-					   $.messager.alert('提示','新增内容成功!');
-   						$("#contentList").datagrid("reload");
-   						TT.closeCurrentWindow();
-				   },
-				   error: function(){
-					   $.messager.alert('提示','新增内容失败!');
-				   }
-				});
-			},
-			clearForm : function(){
-				$('#contentAddForm').form('reset');
-				contentAddEditor.html('');
-			}
-	};
+<script type="text/javascript" src="/js/manager/content-add/content-add.js">
 </script>

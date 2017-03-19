@@ -117,4 +117,12 @@ public class Content extends BasePojo {
         this.content = content;
     }
 
+	@Override
+	public String toString() {
+		return "Content [id=" + id + ", categoryId=" + categoryId + ", title=" + title + ", subTitle=" + subTitle
+				+ ", titleDesc=" + titleDesc + ", url=" + url + ", pic=" + pic + ", pic2=" + pic2 + ", content="
+				+ content + "]";
+	}
+
+    
 }

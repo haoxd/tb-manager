@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="UrlSQL">
-	<!-- 查询系统url列表 -->
-	<select id="loadUrlFiltersData" resultType="org.walkframework.shiro.bean.UrlFilter" useCache="true">
-		<!-- 在这里写sql，本工程暂未用到本文件，由于mybatis加载时，sql为空会报错，故随便写个sql， -->
-		select 1 from dual
-	</select>
-</mapper>

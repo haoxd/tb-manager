@@ -27,4 +27,15 @@ public class ContentConstant {
 		 */
 		Integer NO_STATUS  =0;
 	}
+	/**
+	 * 
+	 * 内容类目属性
+	 * */
+	public interface ContentCategoryAttribute{
+		
+		/**
+		 * 主键id
+		 * */
+		String CONTENT_CATEGORY_ID ="id";
+	}
 }

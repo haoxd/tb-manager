@@ -26,12 +26,7 @@ public class ContentCategory extends BasePojo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Override
-	public String toString() {
-		return "ContentCategory [id=" + id + ", parentId=" + parentId + ", name=" + name + ", status=" + status
-				+ ", sortOrder=" + sortOrder + ", isParent=" + isParent + "]";
-	}
-
+   
 	@Column(name = "parent_id")
     private Long parentId;
 
@@ -101,5 +96,11 @@ public class ContentCategory extends BasePojo {
     public String getState() {
         return getIsParent() ? "closed" : "open";
     }
+    @Override
+   	public String toString() {
+   		return "ContentCategory [id=" + id + ", parentId=" + parentId + ", name=" + name + ", status=" + status
+   				+ ", sortOrder=" + sortOrder + ", isParent=" + isParent + "]";
+   	}
+
 
 }
