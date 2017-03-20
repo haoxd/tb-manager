@@ -1,8 +1,6 @@
 package com.tb.manager.service.content;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +37,7 @@ public class ContentService extends BaseService<Content>{
 	 * @param rows
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public EasyUIResult queryListByContentId(Long contentId, Integer page, Integer rows) {
 		paramData<String, Object> inParam = new paramData<String ,Object>();
 		inParam.put("categoryId", contentId);
