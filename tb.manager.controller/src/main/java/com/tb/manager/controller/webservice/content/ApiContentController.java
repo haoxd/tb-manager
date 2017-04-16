@@ -46,7 +46,7 @@ public class ApiContentController {
 	 * @param rows：页面数量
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET, headers = "HaiTao=1")
 	public ResponseEntity<EasyUIResult> queryListByContentId(
 			@RequestParam("categoryId") Long categoryId,
 			@RequestParam(value="page" ,defaultValue="1") Integer page,
