@@ -30,7 +30,11 @@
 		<artifactId>jsqlparser</artifactId>
 	</dependency>
 		
-	
+	<!-- redis 缓存 -->	
+	<dependency>
+		<groupId>redis.clients</groupId>
+		<artifactId>jedis</artifactId>
+	</dependency>
 	<!--时间操作组件  -->
 	<dependency>
 		<groupId>joda-time</groupId>
