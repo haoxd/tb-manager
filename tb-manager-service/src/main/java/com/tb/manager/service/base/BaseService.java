@@ -85,8 +85,8 @@ public abstract class BaseService<T extends BasePojo> {
 	 * @return
 	 */
 	public Integer add(T t){
-		t.setCreatetime(DateUtils.getDate());
-		t.setUpdatetime(t.getCreatetime());
+		t.setCreateTime(DateUtils.getDate());
+		t.setUpdateTime(t.getCreateTime());
 		return this.dao.insert(t);
 		
 	}
@@ -97,8 +97,8 @@ public abstract class BaseService<T extends BasePojo> {
 	 * @return
 	 */
 	public Integer addSelective(T t){
-		t.setCreatetime(DateUtils.getDate());
-		t.setUpdatetime(t.getCreatetime());
+		t.setCreateTime(DateUtils.getDate());
+		t.setUpdateTime(t.getCreateTime());
 		return this.dao.insertSelective(t);
 		
 	}
@@ -109,7 +109,7 @@ public abstract class BaseService<T extends BasePojo> {
 	 * @return
 	 */
 	public Integer update(T t) {
-		t.setUpdatetime(DateUtils.getDate());
+		t.setUpdateTime(DateUtils.getDate());
 		return this.dao.updateByPrimaryKey(t);
 		
 	}
@@ -120,8 +120,8 @@ public abstract class BaseService<T extends BasePojo> {
 	 * @return
 	 */
 	public Integer updateSelective(T t) {
-		t.setUpdatetime(DateUtils.getDate());
-		t.setCreatetime(null);//创建时间永远不会被更新
+		t.setUpdateTime(DateUtils.getDate());
+		t.setCreateTime(null);//创建时间永远不会被更新
 		return this.dao.updateByPrimaryKeySelective(t);		
 	}
 	

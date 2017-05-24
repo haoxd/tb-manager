@@ -50,7 +50,7 @@ public class ApiItemCatController {
 	 * 测试jsop的实现：原理型代码		）
 	 * @return
 	 */
-	@RequestMapping( value="test",method=RequestMethod.GET)
+	@RequestMapping( value="test",method=RequestMethod.GET,headers = "HaiTao=1")
 	public ResponseEntity<String> queryItemCatData(
 			@RequestParam(value="callback",required=false)String callback ){
 		

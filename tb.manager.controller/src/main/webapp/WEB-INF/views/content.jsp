@@ -16,8 +16,8 @@
 		            <th data-options="field:'url',width:60,align:'center',formatter:TB.formatUrl">内容连接</th>
 		            <th data-options="field:'pic',width:50,align:'center',formatter:TB.formatUrl">图片</th>
 		            <th data-options="field:'pic2',width:50,align:'center',formatter:TB.formatUrl">图片2</th>
-		            <th data-options="field:'createTime',width:130,align:'center',formatter:TB.formatDateTime">创建日期</th>
-		            <th data-options="field:'updateTime',width:130,align:'center',formatter:TB.formatDateTime">更新日期</th>
+		            <th data-options="field:'create_time',width:130,align:'center',formatter:TB.formatDateTime">创建日期</th>
+		            <th data-options="field:'update_time',width:130,align:'center',formatter:TB.formatDateTime">更新日期</th>
 		        </tr>
 		    </thead>
 		</table>

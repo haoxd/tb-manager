@@ -1,11 +1,14 @@
 package com.tb.manager.pojo;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.tb.manager.pojo.base.BasePojo;
 
 /**
@@ -19,12 +22,13 @@ import com.tb.manager.pojo.base.BasePojo;
 * 文件名称：Content.java  
 * 类说明：内容
  */
-@Table(name = "tb_content")
-public class Content extends BasePojo {
+@Table(name = "tb_content") 
+public class Content extends BasePojo{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
     @Column(name = "category_id")
     private Long categoryId;
@@ -33,6 +37,7 @@ public class Content extends BasePojo {
 
     @Column(name = "sub_title")
     private String subTitle;
+
 
     @Column(name = "title_desc")
     private String titleDesc;
@@ -44,8 +49,9 @@ public class Content extends BasePojo {
     private String pic2;
 
     private String content;
+    
 
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 
@@ -119,10 +125,11 @@ public class Content extends BasePojo {
 
 	@Override
 	public String toString() {
-		return "Content [id=" + id + ", categoryId=" + categoryId + ", title=" + title + ", subTitle=" + subTitle
+		return "[id=" + id + ", categoryId=" + categoryId + ", title=" + title + ", subTitle=" + subTitle
 				+ ", titleDesc=" + titleDesc + ", url=" + url + ", pic=" + pic + ", pic2=" + pic2 + ", content="
-				+ content + "]";
+				+ content + ", createTime=" + getCreateTime() + ", updateTime=" + getUpdateTime() + "]";
 	}
 
+	
     
 }

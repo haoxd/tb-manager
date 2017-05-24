@@ -12,8 +12,8 @@
             <th data-options="field:'num',width:70,align:'right'">库存数量</th>
             <th data-options="field:'barcode',width:100">条形码</th>
             <th data-options="field:'status',width:60,align:'center',formatter:TB.formatItemStatus">状态</th>
-            <th data-options="field:'createtime',width:130,align:'center',formatter:TB.formatDateTime">创建日期</th>
-            <th data-options="field:'updatetime',width:130,align:'center',formatter:TB.formatDateTime">更新日期</th>
+            <th data-options="field:'createTime',width:130,align:'center',formatter:TB.formatDateTime">创建日期</th>
+            <th data-options="field:'updateTime',width:130,align:'center',formatter:TB.formatDateTime">更新日期</th>
         </tr>
     </thead>
 </table>

@@ -44,7 +44,7 @@ public class ItemParamService extends BaseService<ItemParam> {
 		// 按照创建时间排序
 		Example example = new Example(ItemParam.class);
 
-		example.setOrderByClause("createtime DESC");
+		example.setOrderByClause("create_time DESC");
 		List<ItemParam> itemList = this.dao.selectByExample(example);
 
 		PageInfo<ItemParam> pageInfo = new PageInfo<ItemParam>(itemList);

@@ -43,6 +43,14 @@ public class StringUtil {
 	 *            源字符串
 	 * @return 是否数字的标志
 	 */
+	public static String [] createStringDate(){
+		return new String[]{"yyyy-MM","yyyyMM","yyyy/MM",   
+                "yyyyMMdd","yyyy-MM-dd","yyyy/MM/dd",   
+                "yyyyMMddHHmmss",   
+                            "yyyy-MM-dd HH:mm:ss",   
+                            "yyyy/MM/dd HH:mm:ss"};
+	}
+	
 	public static boolean isNumeric(String src) {
 		boolean return_value = false;
 		if (src != null && src.length() > 0) {

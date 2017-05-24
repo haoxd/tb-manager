@@ -4,11 +4,11 @@
     
     <select id="queryListByContentIdDesc" resultType="com.tb.common.org.gtmd.frame.tools.paramData">
         
-        SELECT * 
+        SELECT a.* 
         FROM 
         tb_content a  
         WHERE  a.category_id=#{categoryId}
-        ORDER BY a.updateTime DESC
+        ORDER BY a.update_time DESC
 
     </select>
 	

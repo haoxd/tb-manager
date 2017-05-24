@@ -31,7 +31,7 @@ public class ItemParamItemService extends BaseService<ItemParamItem>{
 		// 更新的数据
 		ItemParamItem  inParam = new ItemParamItem();
 		inParam.setParamData(itemParams);;
-		inParam.setUpdatetime(DateUtils.getDate());
+		inParam.setUpdateTime(DateUtils.getDate());
 		
 		//更新条件
 		Example example = new Example(ItemParamItem.class);
