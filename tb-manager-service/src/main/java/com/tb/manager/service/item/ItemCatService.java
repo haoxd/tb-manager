@@ -1,6 +1,5 @@
 package com.tb.manager.service.item;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,13 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tb.common.bean.api.ItemCatData;
 import com.tb.common.bean.api.ItemCatResult;
-import com.tb.manager.cache.RedisCacheService;
+import com.tb.common.service.cache.RedisCacheService;
 import com.tb.manager.dao.item.ItemCatDao;
 import com.tb.manager.pojo.ItemCat;
 import com.tb.manager.service.base.BaseService;

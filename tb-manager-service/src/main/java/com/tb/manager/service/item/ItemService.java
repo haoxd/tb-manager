@@ -39,15 +39,7 @@ public class ItemService extends BaseService<Item> {
 	@Resource(name="itemParamItemService")
 	private ItemParamItemService ipiService;
 	
-	/**
-	 * 私有商品描述类
-	 */
-	private ItemDesc iDesc;
-	
-	/**
-	 * 私有商品规格类
-	 */
-	private ItemParamItem itemParamItem;
+
 
 	/**
 	 * 增加商品信息
@@ -61,14 +53,14 @@ public class ItemService extends BaseService<Item> {
 		item.setStatus(1);//设置默认状态	
 		item.setId(null);//处于安全考虑，强制设置id为null，通过数据库自增长添加得到，防止客户端攻击
 		Integer resultiItem =  super.add(item);
-		
+		ItemDesc iDesc = new ItemDesc();
 		//处理商品信息
 		iDesc = new ItemDesc();
 		iDesc.setItemDesc(desc);
 		iDesc.setItemId(item.getId());//获取商品id
 		Integer resultDesc= this.itemDescService.add(iDesc);
 		//商品规格参数
-		itemParamItem = new ItemParamItem();
+		ItemParamItem itemParamItem = new ItemParamItem();
 		itemParamItem.setItemId(item.getId());
 		itemParamItem.setParamData(itemParams);
 		Integer resultItemParam=this.ipiService.add(itemParamItem);
@@ -117,8 +109,7 @@ public class ItemService extends BaseService<Item> {
 	public Boolean updateItem(Item item, String desc, String itemParams) {
 		item.setStatus(null);//强制设置状态不可修改
 		Integer resultItem = super.updateSelective(item);
-		
-		iDesc = new  ItemDesc();
+		ItemDesc iDesc = new ItemDesc();
 		iDesc.setItemId(item.getId());
 		iDesc.setItemDesc(desc);
 			

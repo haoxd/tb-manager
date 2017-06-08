@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tb.manager.pojo.Item;
 import com.tb.manager.pojo.ItemDesc;
+import com.tb.manager.pojo.ItemParamItem;
 import com.tb.manager.service.item.ItemDescService;
+import com.tb.manager.service.item.ItemParamItemService;
 import com.tb.manager.service.item.ItemService;
 
 /**
@@ -41,6 +43,13 @@ public class ApiItemController {
 	 */
 	@Resource(name="itemDescService")
 	private ItemDescService itemDescService;
+	
+	/**
+	 * 商品规格参数controller
+	 */
+	@Resource(name="itemParamItemService")
+	private ItemParamItemService  ipiService;
+	
 	
 	/**
 	 * 更具商品id获取商品信息
@@ -83,5 +92,32 @@ public class ApiItemController {
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	}
+	
+	/**
+	 * 更具商品itemid查询商品规格数据
+	 * @param itemId:商品itemid
+	 * @return
+	 */
+	@RequestMapping(value="/getItemParamItemByItemId/{itemId}",method=RequestMethod.GET,headers = "HaiTao=1")
+	public ResponseEntity<ItemParamItem> queryItemParamItemByItemId(
+			@PathVariable("itemId") Long itemId ){
+		
+		try {
+			log.debug("更具商品itemid查询商品规格数据入参：itemid="+itemId);
+			
+			ItemParamItem  inParam = new ItemParamItem();
+			inParam.setItemId(itemId);
+			ItemParamItem itemParamItem = this.ipiService.queryOne(inParam);
+			if(null == itemParamItem){
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);//404
+			}else{
+				return ResponseEntity.ok(itemParamItem);
+			}
+		} catch (Exception e) {
+			log.error("更具商品itemid查询商品规格数据错误"+e);
+		}
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);//500
+		
+	} 
 
 }
