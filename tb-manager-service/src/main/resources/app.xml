@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <!--web接口地址  -->
+    <webServiceAddress url="http://www.tb.com/"/>
+    
+   <item>
+       <!--商品详情通知  -->
+       	<ItemDataNotice url ="ItemDataNotice/"/>      
+   </item>
+    
+    
+    
+    
+</application>

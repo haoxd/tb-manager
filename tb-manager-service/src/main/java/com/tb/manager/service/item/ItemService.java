@@ -1,9 +1,13 @@
 package com.tb.manager.service.item;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.http.ParseException;
+import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,8 @@ import com.tb.manager.pojo.ItemDesc;
 import com.tb.manager.pojo.ItemParamItem;
 import com.tb.manager.service.base.BaseService;
 import com.tb.manager.system.constant.ItemConstant;
+import com.tb.manager.system.http.ws.intf.HttpClientApiServerTools;
+import com.tb.manager.util.readAppXml;
 @Service("itemService")
 public class ItemService extends BaseService<Item> {
 	
@@ -38,6 +44,9 @@ public class ItemService extends BaseService<Item> {
 	 */
 	@Resource(name="itemParamItemService")
 	private ItemParamItemService ipiService;
+	
+	@Resource(name="apiServer")
+	private HttpClientApiServerTools http;
 	
 
 
@@ -105,8 +114,11 @@ public class ItemService extends BaseService<Item> {
 	 * @param item：商品主体信息
 	 * @param desc:商品描述
 	 * @return
+	 * @throws DocumentException 
+	 * @throws IOException 
+	 * @throws ParseException 
 	 */
-	public Boolean updateItem(Item item, String desc, String itemParams) {
+	public Boolean updateItem(Item item, String desc, String itemParams){
 		item.setStatus(null);//强制设置状态不可修改
 		Integer resultItem = super.updateSelective(item);
 		ItemDesc iDesc = new ItemDesc();
@@ -118,8 +130,17 @@ public class ItemService extends BaseService<Item> {
 		
 		Integer resultItemParam = this.ipiService.updateItemParamItem(item.getId(),itemParams);
 		
-		
-		return resultItem.intValue() == 1 && resultDesc.intValue() == 1 && resultItemParam.intValue()== 1;
+		boolean updateResult =resultItem.intValue() == 1 && resultDesc.intValue() == 1 && resultItemParam.intValue()== 1;
+		//如果商品更新成功通知前台系统数据同步
+		if(updateResult){
+			try {
+				http.sendPost(readAppXml.readAppXMLByNode("item", "ItemDataNotice")+item.getId());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}	
+		return updateResult;
 	}
 
 	/**

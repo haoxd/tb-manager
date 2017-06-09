@@ -132,7 +132,6 @@ public class ItemController {
 			if(log.isDebugEnabled()){
 				log.debug("更新商品入参：item={}"+item +"desc ={}" +desc+"itemParams={}"+itemParams);	
 			}
-					
 			if(StringUtils.isEmpty(item.getTitle())){
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();//400
 			}
