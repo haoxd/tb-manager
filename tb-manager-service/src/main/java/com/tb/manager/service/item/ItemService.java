@@ -3,14 +3,19 @@ package com.tb.manager.service.item;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.apache.http.ParseException;
 import org.dom4j.DocumentException;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.abel533.entity.Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,6 +26,10 @@ import com.tb.manager.pojo.ItemDesc;
 import com.tb.manager.pojo.ItemParamItem;
 import com.tb.manager.service.base.BaseService;
 import com.tb.manager.system.constant.ItemConstant;
+import com.tb.manager.system.constant.MQConstant;
+import com.tb.manager.system.constant.MQConstant.MQ_MESSAGE_DATA;
+import com.tb.manager.system.constant.MQConstant.MQ_MESSAGE_TYPE;
+import com.tb.manager.system.constant.MQConstant.MQ_SEND_TYPE;
 import com.tb.manager.system.http.ws.intf.HttpClientApiServerTools;
 import com.tb.manager.util.readAppXml;
 @Service("itemService")
@@ -48,6 +57,14 @@ public class ItemService extends BaseService<Item> {
 	@Resource(name="apiServer")
 	private HttpClientApiServerTools http;
 	
+	/**
+	 * 注入mq模板
+	 */
+	@Autowired
+	private RabbitTemplate rabbitMq;
+	
+	private static final ObjectMapper oMapper = new ObjectMapper();
+	
 
 
 	/**
@@ -73,8 +90,13 @@ public class ItemService extends BaseService<Item> {
 		itemParamItem.setItemId(item.getId());
 		itemParamItem.setParamData(itemParams);
 		Integer resultItemParam=this.ipiService.add(itemParamItem);
+		boolean addResult =resultiItem.intValue() == 1 && resultDesc.intValue() == 1 && resultItemParam.intValue() == 1;
+		//增加成功 mq发送消息
+		if(addResult){
+			this.mqSendMessage(item.getId(), MQConstant.MQ_SEND_TYPE.MQ_SEND_ADD);
+		}
 		
-		return resultiItem.intValue() == 1 && resultDesc.intValue() == 1 && resultItemParam.intValue() == 1;
+		return addResult;
 	}
 
 	/**
@@ -133,12 +155,16 @@ public class ItemService extends BaseService<Item> {
 		boolean updateResult =resultItem.intValue() == 1 && resultDesc.intValue() == 1 && resultItemParam.intValue()== 1;
 		//如果商品更新成功通知前台系统数据同步
 		if(updateResult){
-			try {
+			// 方案一：接口同步
+			/*try {
 				http.sendPost(readAppXml.readAppXMLByNode("item", "ItemDataNotice")+item.getId());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
+			} */
+			
+			//方案二：rabbitmq
+			//发送消息到mq交换机，通知到其他系统
+			this.mqSendMessage(item.getId(), MQConstant.MQ_SEND_TYPE.MQ_SEND_UPDATE);
 		}	
 		return updateResult;
 	}
@@ -158,9 +184,32 @@ public class ItemService extends BaseService<Item> {
 		Integer itemParamItemResult = this.ipiService.delByIds(listIds, ItemParamItem.class, ItemConstant.ItemParamItemAttribute.ITEM_PARAM_ITEM_ID);
 	
 		int count = itemResult.intValue()+itemDescResult.intValue()+itemParamItemResult.intValue();
+		boolean  delResult =count>0 ? true :false;
+		if(delResult){
+			for (Object obj : listIds) {
+				this.mqSendMessage((Long)obj, MQConstant.MQ_SEND_TYPE.MQ_SEND_DEL);
+			}		
+		}
+		return delResult;
 		
-		return count>0 ? true :false;
-		
+	}
+	
+	/**
+	 * MQ 发送消息
+	 */
+	private void mqSendMessage(Long itemId,String type){
+		try {
+			//方案二：rabbitmq
+			//发送消息到mq交换机，通知到其他系统
+			Map<String,Object> mqMessage = new HashMap<String,Object>();
+			mqMessage.put(MQ_MESSAGE_DATA.MQ_MESSAGE_ID,itemId);
+			mqMessage.put(MQ_MESSAGE_DATA.MQ_MESSAGE_TYPE, type);
+			mqMessage.put(MQ_MESSAGE_DATA.MQ_MESSAGE_DATE, System.currentTimeMillis());
+			
+				this.rabbitMq.convertAndSend(MQ_MESSAGE_TYPE.MQ_MESSAGE+type, oMapper.writeValueAsString(mqMessage));
+			} catch (AmqpException | JsonProcessingException e) {
+				e.printStackTrace();
+			}
 	}
 
 	

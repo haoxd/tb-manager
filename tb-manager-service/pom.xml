@@ -1,55 +1,61 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.tb.manager</groupId>
-    <artifactId>tb-manager</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-  </parent>
-  <artifactId>tb-manager-service</artifactId>
-  
-   <!--service 依赖于 dao -->
-  <dependencies>
-  	<dependency>
-  		  <groupId>com.tb.manager</groupId>
-  		  <artifactId>tb-manager-dao</artifactId>
-  		  <version>1.0.0-SNAPSHOT</version>
-  	</dependency>
-  	<!--依赖的webMvc包，因为只有controller和service用到  -->
-  	<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-webmvc</artifactId>
-	</dependency>
-	
-	<!-- 分页助手 -->
-	<dependency>
-		<groupId>com.github.pagehelper</groupId>
-		<artifactId>pagehelper</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>com.github.jsqlparser</groupId>
-		<artifactId>jsqlparser</artifactId>
-	</dependency>
-		
-	<!-- redis 缓存 -->	
-	<dependency>
-		<groupId>redis.clients</groupId>
-		<artifactId>jedis</artifactId>
-	</dependency>
-	
-	<!-- httpclient -->
-	<dependency>
-		<groupId>org.apache.httpcomponents</groupId>
-		<artifactId>httpclient</artifactId>
-	</dependency>
-	<!-- dom4j -->
-	<dependency>
-   		 <groupId>dom4j</groupId>
-   		 <artifactId>dom4j</artifactId>
-	</dependency>
-	<!--时间操作组件  -->
-	<dependency>
-		<groupId>joda-time</groupId>
-		<artifactId>joda-time</artifactId>
-	</dependency>
-  </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.tb.manager</groupId>
+		<artifactId>tb-manager</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>tb-manager-service</artifactId>
+
+	<!--service 依赖于 dao -->
+	<dependencies>
+		<dependency>
+			<groupId>com.tb.manager</groupId>
+			<artifactId>tb-manager-dao</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<!--依赖的webMvc包，因为只有controller和service用到 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+
+		<!-- 分页助手 -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.jsqlparser</groupId>
+			<artifactId>jsqlparser</artifactId>
+		</dependency>
+
+		<!-- redis 缓存 -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+
+		<!-- httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+		<!-- dom4j -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+		</dependency>
+		<!--时间操作组件 -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
+		<!--spring-amqp -->
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+		</dependency>
+	</dependencies>
 </project>
