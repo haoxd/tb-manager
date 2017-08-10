@@ -57,7 +57,7 @@ public class IdleConnectionEvictor extends Thread {
 		try {
 			while (!shutdown) {
 				synchronized (this) {
-					wait(5000);
+					wait(500000);
 					// 关闭失效的连接
 					connMgr.closeExpiredConnections();
 				}

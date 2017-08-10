@@ -16,7 +16,7 @@
         <dependent-module archiveName="tb-common-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/tb-common/tb-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="tb.manager.controller"/>
         <property name="java-output-path" value="/tb.manager.controller/target/classes"/>
+        <property name="context-root" value="tb-manager-controller"/>
     </wb-module>
 </project-modules>

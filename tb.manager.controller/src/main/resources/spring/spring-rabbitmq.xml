@@ -19,7 +19,7 @@
 	<rabbit:admin connection-factory="connectionFactory"/>
 		
 	<!--定义通配符类型的交换机 topic  -->
-	<rabbit:topic-exchange name="MANAGER-TB-ITEM-EXCHANGE" auto-declare="true" durable="false" />
+	<rabbit:topic-exchange name="MANAGER-TB-ITEM-EXCHANGE" auto-declare="true" durable="true" />
 
 	<!-- 定义Rabbit模板，指定连接工厂以及定义exchange -->
 	<rabbit:template id="rabbitTemplate" connection-factory="connectionFactory" exchange="MANAGER-TB-ITEM-EXCHANGE" />
