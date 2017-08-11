@@ -20,6 +20,7 @@ import com.github.abel533.entity.Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tb.common.bean.EasyUIResult;
+import com.tb.common.service.cache.RedisComusterService;
 import com.tb.manager.dao.item.ItemDao;
 import com.tb.manager.pojo.Item;
 import com.tb.manager.pojo.ItemDesc;
@@ -62,6 +63,9 @@ public class ItemService extends BaseService<Item> {
 	 */
 	@Autowired
 	private RabbitTemplate rabbitMq;
+	
+	@Resource(name="redisComuster")
+	private RedisComusterService redisc;
 	
 	private static final ObjectMapper oMapper = new ObjectMapper();
 	
@@ -210,6 +214,13 @@ public class ItemService extends BaseService<Item> {
 			} catch (AmqpException | JsonProcessingException e) {
 				e.printStackTrace();
 			}
+	}
+
+	public void redisTest() {
+		this.redisc.del("123");
+		this.redisc.set("abc", "23");
+		this.redisc.expire("abc",10);
+		System.out.println(this.redisc.get("abc"));
 	}
 
 	

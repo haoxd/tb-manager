@@ -1,9 +1,10 @@
 package com.tb.manager.controller.item;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.tb.common.bean.EasyUIResult;
 import com.tb.manager.pojo.Item;
 import com.tb.manager.service.item.ItemService;
@@ -234,6 +236,13 @@ public class ItemController {
 			log.error("下架商品信息出错:"+e);			
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();//500
+	}
+	
+	@RequestMapping(value="/test",method=RequestMethod.GET)
+	@ResponseBody
+	public String test (){
+		this.itemService.redisTest();
+		return "123";
 	}
 	
 	
